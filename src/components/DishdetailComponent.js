@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Card, CardBody,CardImg,CardTitle,Breadcrumb,BreadcrumbItem} from 'reactstrap';
+import {Card,CardBody,CardImg,CardTitle,Breadcrumb,BreadcrumbItem} from 'reactstrap';
 import {Link} from 'react-router-dom'; 
 class DishDetail extends Component{
 
