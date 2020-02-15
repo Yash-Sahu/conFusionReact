@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {Card,CardImg,CardTitle,Breadcrumb,BreadcrumbItem,CardBody} from 'reactstrap';
 import {Link} from 'react-router-dom';
- 
+import { Loading } from './LoadingComponent';
+
 const imgSize ={
     height: '20rem',
     borderRadius: 5
@@ -9,7 +10,7 @@ const imgSize ={
 
 class Menu extends Component{
     render(){
-        const menu = this.props.dishes.map((dish)=>{
+        const menu = this.props.dishes.dishes.map((dish)=>{
             return(
                 <div className="col-12 col-md-5 m-1">
                     <Card>
@@ -24,7 +25,27 @@ class Menu extends Component{
             );
         });
 
-        return(
+        if (this.props.dishes.isLoading) {
+            return(
+                <div className="container">
+                    <div className="row">            
+                        <Loading />
+                    </div>
+                </div>
+            );
+        }
+        else if (this.props.dishes.errMess) {
+            return(
+                <div className="container">
+                    <div className="row"> 
+                        <div className="col-12">
+                            <h4>{this.props.dishes.errMess}</h4>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+        else return(
             <div className="container">
                 <div className="row">
                     <Breadcrumb>

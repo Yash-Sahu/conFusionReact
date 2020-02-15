@@ -1,13 +1,25 @@
 import React from 'react';
 import {Card, CardImg, CardText, CardBody,CardTitle, CardSubtitle} from 'reactstrap';
+import { Loading } from './LoadingComponent';
+
 const Imgsize = {
     height:'20rem',
 }
 const Bodysize ={
     minHeight:'15rem',
 }
-function RenderCard({item}){
-    return(
+function RenderCard({item, isLoading, errMess}){
+    if (isLoading) {
+        return(
+            <Loading />
+        );
+    }
+    else if (errMess) {
+        return(
+           <h4>{errMess}</h4>
+        );
+    }
+    else return(
         <Card>
             <CardImg style={Imgsize} src={item.image} alt={item.name}/>
             <CardBody style={Bodysize}>
@@ -24,7 +36,7 @@ function Home(props){
         <div className="container">
             <div className="row align-item-start">
                 <div className="col-12 col-md-4 ">
-                    <RenderCard item={props.dish}/>
+                    <RenderCard item={props.dish} isLoading={props.dishesLoading} errMess={props.dishesErrMess}/>
                 </div>
                 <div className="col-12 col-md-4 ">
                     <RenderCard item={props.promotion}/>

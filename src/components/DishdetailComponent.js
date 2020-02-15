@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Card, CardBody, CardImg, CardTitle, Breadcrumb, BreadcrumbItem, Button, Modal, ModalBody, ModalHeader, Row, Label} from 'reactstrap';
 import {Link} from 'react-router-dom'; 
 import {Control, Errors, LocalForm} from 'react-redux-form';
+import { Loading } from './LoadingComponent';
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -26,7 +27,7 @@ class DishDetail extends Component{
     }
 
     handleComment(values){
-        alert('Current state is: ' + JSON.stringify(values));
+        this.props.addComment(this.props.dish.id, values.rating, values.username, values.comment);
     }
 
     renderDish(dish){
@@ -48,8 +49,8 @@ class DishDetail extends Component{
                     return (
                         <li key={comment.id} >
                             <div>{comment.comment}</div>
-                            <br />
                             <div>-- {comment.author} , {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}</div>
+                            <br />
                         </li>
                     );
                 })}
@@ -64,7 +65,25 @@ class DishDetail extends Component{
     }
 
     render(){
-        if (this.props.dish != null) {
+        if (this.props.isLoading) {
+            return(
+                <div className="container">
+                    <div className="row">            
+                        <Loading />
+                    </div>
+                </div>
+            );
+        }
+        else if (this.props.errMess) {
+            return(
+                <div className="container">
+                    <div className="row">            
+                        <h4>{this.props.errMess}</h4>
+                    </div>
+                </div>
+            );
+        }
+        else if (this.props.dish != null) {
             return(
                 <React.Fragment>
                 <div className="container">
