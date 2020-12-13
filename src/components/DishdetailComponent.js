@@ -3,6 +3,7 @@ import {Card, CardBody, CardImg, CardTitle, Breadcrumb, BreadcrumbItem, Button, 
 import {Link} from 'react-router-dom'; 
 import {Control, Errors, LocalForm} from 'react-redux-form';
 import { Loading } from './LoadingComponent';
+import { baseUrl } from '../shared/baseUrl';
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -26,14 +27,14 @@ class DishDetail extends Component{
         });
     }
 
-    handleComment(values){
-        this.props.addComment(this.props.dish.id, values.rating, values.username, values.comment);
+    handleComment(values){console.log(this.props);
+        this.props.postComment(this.props.dish.id, values.rating, values.username, values.comment);
     }
 
     renderDish(dish){
         return(
             <Card>
-                <CardImg width="100%" top src={dish.image} alt={dish.name}/>
+                <CardImg width="100%" top src={baseUrl + dish.image} alt={dish.name}/>
                 <CardBody>
                     <CardTitle>{dish.name}</CardTitle>
                     <CardBody>{dish.description}</CardBody>
